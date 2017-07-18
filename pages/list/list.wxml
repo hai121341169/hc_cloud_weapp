@@ -1,0 +1,47 @@
+<import src="../common/head.wxml" />
+<import src="../common/foot.wxml" />
+
+<!--index.wxml-->
+<view class="container">
+  <template is="head" data="{{title:'2. 上传照片',title_logo:'/resources/project.png'}}"/>
+  <view class="page-body">
+  	<view class="desc">
+  		<text>我的照片</text>
+  	</view>
+  	<view class="list_area">  
+		<view class="item_image">
+			<block wx:for="{{list_1}}" wx:key="imageKey" wx:for-item="image">
+			<view class="image_area">
+				<image src="{{image.image_url}}" mode="scaleToFill"></image>
+          		<icon type="clear" data-index="{{index}}" data-order_work_image_id="{{image.order_work_image_id}}" size="25" bindtap="listenCheckboxChange" />
+          		<image src="/resources/arrow_left.png" data-index="{{index}}" data-order_work_image_id="{{image.order_work_image_id}}" class="arrow" bindtap="insertImage"></image>
+			</view>
+			</block>
+			<view class="image_area virtual_area">
+          		<image src="/resources/arrow_left.png" data-index="-1" data-order_work_image_id="-1" class="arrow" bindtap="insertImage"></image>
+			</view>
+		</view>
+		<view class="clear"></view> 
+	</view>
+  	<view class="tmp_area">
+  		<view class="tmp_area_title">
+	  		<text>临时区域7张照片</text>
+	  	</view>
+  		<scroll-view class="tmp_area_image" scroll-x="true" bindscroll="scroll" style="width: 100%">
+  			<block wx:for="{{list_0}}" wx:key="imageKey" wx:for-item="image">
+			<view class="tmp_image_area">
+				<image src="{{image.image_url}}" mode="scaleToFill"></image>
+          		<icon type="clear" data-index="{{index}}" data-order_work_image_id="{{image.order_work_image_id}}" size="25" bindtap="listenCheckboxChange" />
+          		<image wx:if="{{select_index != index}}" src="/resources/arrow_up.png" data-index="{{index}}" data-order_work_image_id="{{image.order_work_image_id}}" class="arrow" bindtap="selectImage"></image>
+          		<text wx:else class="select_icon">已经选中</text>
+			</view>
+			</block>
+	  	</scroll-view>
+  		<view class="tmp_area_btn">
+      		<button type="button" class="save_btn " bindtap="saveImage">保存</button>
+      		<button type="button" class="submit_btn" bindtap="submitImage">完成</button>
+      		<view class="clear"></view>
+	  	</view>
+  	</view>
+  </view>
+</view>

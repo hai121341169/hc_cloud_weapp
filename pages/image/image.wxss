@@ -1,0 +1,106 @@
+/**history.wxss**/
+.page-head{
+  	width: 660rpx;
+	position: fixed;
+	background-color: #FFF;
+	z-index: 2;
+}
+.tab_area{
+	display:-webkit-box;
+	display:-webkit-flex;
+	display:flex;
+    height:80rpx;
+	position:fixed;
+	width:660rpx;
+	padding-top:230rpx;
+	background-color: #FFF;
+	z-index: 1;
+}
+
+.tab_btn{
+	display:flex;
+	-webkit-box-flex:1;
+	-webkit-flex:1;
+	flex:1;
+	width: 50%;
+	border: 1px solid #CCC;
+	height: 100%;
+    align-items: center;
+    justify-content:center;
+	font-size: 32rpx;
+	background-color: #f2f2f2;
+}
+
+#tab_btn_0.on{
+	border-right: 0;
+	border-bottom: 0;
+	background-color: #FFF;
+}
+
+#tab_btn_1.on{
+	border-left: 0;
+	border-bottom: 0;
+	background-color: #FFF;
+}
+
+.item{
+	padding: 30rpx 0;
+}
+.list_area{
+	padding-top: 310rpx;
+	display:flex;
+	flex-direction:column;
+	box-sizing:border-box;
+	display: none;
+	height: 1070rpx;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.list_area.on{
+	display: block;
+}
+
+.item_image{
+	width:670rpx;	
+}
+
+.item_area{
+	padding: 25rpx 0;
+	border-bottom: 1px solid #cccccc;
+}
+.item_line{
+	margin-bottom: 20rpx;
+}
+.item_line image{
+	width: 40rpx;
+	height: 40rpx;
+	vertical-align:middle;
+	margin-right: 20rpx;
+  	border-radius: 50%;
+}
+
+.image_area{
+  width:215.5rpx;
+  margin-right: 8rpx;
+  height: 215.5rpx;
+  margin-bottom: 1rpx;
+  display: inline-block;
+  position: relative;
+}
+
+.image_area image{
+  width:100%;
+  height:100%;  
+}
+
+.tmp_area{
+	position:fixed;
+	bottom:0;
+	background-color:#FFF;
+	width: 660rpx;
+}
+
+.tmp_area_btn{
+	margin: 20rpx 0;
+}

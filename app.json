@@ -1,0 +1,19 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/history/history",
+    "pages/image/image",
+    "pages/test/test",
+    "pages/list/list"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "照片上传助手  ",
+    "navigationBarTextStyle":"black"
+  },
+  "networkTimeout": {
+  },
+  "enablePullDownRefresh": true,  
+  "backgroundTextStyle": "dark"  
+}

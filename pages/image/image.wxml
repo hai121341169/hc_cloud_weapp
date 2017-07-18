@@ -1,0 +1,56 @@
+<import src="../common/head.wxml" />
+<import src="../common/foot.wxml" />
+
+<!--index.wxml-->
+<view class="container">
+  <template is="head" data="{{title:'照片列表',title_logo:'/resources/camera.png'}}"/>
+  <view class="page-body">
+  	<view class="tab_area">
+  		<view class="tab_btn {{current_tab == 0 ? 'on' : ''}}" data-index="0" id="tab_btn_0" bindtap="tabChange">我的照片</view>  
+    	<view class="tab_btn {{current_tab == 1 ? 'on' : ''}}" data-index="1" id="tab_btn_1" bindtap="tabChange">好友照片</view>  
+  	</view>
+  	<view class="list_area {{current_tab == 0 ? 'on' : ''}}"> 
+		<view class="item_area" style="border: 0;">
+			<view class="item_image">
+				<block wx:for="{{tab_0}}" wx:key="imageKey" wx:for-item="image">
+				<view class="image_area">
+					<image src="{{image.image_url}}" mode="scaleToFill"></image>
+				</view>
+				</block>
+				<view wx:if="{{edit_hidden}}" class="image_area">
+					<image class="camera_logo" src="../../resources/add.png" bindtap="addImage"></image>
+				</view>
+			</view>
+			<view class="clear"></view> 
+		</view> 
+  	</view>
+  	<view class="list_area {{current_tab == 1 ? 'on' : ''}}">
+		<view wx:for="{{tab_1}}" wx:key="order_key" wx:for-item="item">   
+			<view class="item_area">
+				<view class="item_line">
+					<image src="{{item.avatar_url}}"></image>
+					<text>{{item.username}} 上传了{{item.data.length}}张照片</text>
+				</view>  
+				<view class="item_image">
+					<block wx:for="{{item.data}}" wx:key="imageKey" wx:for-item="image">
+					<view class="image_area">
+						<image src="{{image.image_url}}" mode="scaleToFill"></image>
+					</view>
+					</block>
+				</view>
+				<view class="clear"></view> 
+			</view>   
+		</view>
+  	</view>
+
+  	<view class="tmp_area">
+  		<view class="tmp_area_btn">
+  			<navigator wx:if="{{edit_hidden}}" url="/pages/list/list?order_work_id={{order_work_id}}">
+      			<button wx:if="{{edit_hidden}}" type="button" class="">下一步：编辑照片</button>
+      		</navigator>
+	  	</view>
+  	</view>
+
+  </view>
+  <template is="foot" />
+</view>

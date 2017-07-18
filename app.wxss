@@ -1,0 +1,75 @@
+/**app.wxss**/
+page{
+  height: 100%;
+  overflow-x:hidden;
+  font-family: '微软雅黑';
+  font-size: 30rpx;
+  color: #3b3b3b;
+}
+.container {
+  width: 660rpx;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin: 0 auto;
+} 
+.page-head{
+  width:100%;
+}
+.title{
+  color: #FFF;
+  font-size: 40rpx;
+  margin-left:50rpx;
+}
+.title-logo {
+  position: absolute;
+  width: 180rpx;
+  height: 180rpx;
+  top:-40rpx;
+  right:20rpx;
+}
+.head-desc {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top:40rpx;
+  box-sizing:border-box;
+  width:100%;
+  height:160rpx;
+  color: #888888;
+  font-size: 28rpx;
+  text-align: left;
+  background-color: #ff8080;
+  border-radius: 10rpx;
+}
+
+.page-body {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.page-foot{
+  margin: 100rpx 0 30rpx 0;
+  text-align: center;
+  color: #1aad19;
+  font-size: 0;
+}
+.text-foot{
+	color:#888888;
+	font-size:28rpx;
+	margin-left: 5px;
+}
+
+button {
+  height: 80rpx;
+  font-size: 14px;
+  background-color: #ff4d4d;
+  color: #FFF;
+  border: 0;
+}
+.clear{
+  clear: both;
+}

@@ -1,0 +1,9 @@
+<view class="headaa">
+  <text>asdfasdfasdfadsf</text>
+</view>
+
+<view class="item" wx:for="{{list}}" wx:key="order_key" wx:for-item="item">  
+    <image class="img" src="https://cdn.kuaidi100.com/images/all/56/zhongtong.png"></image>  
+    <text calss="txt" >{{item.name}}</text>  
+    <text class="txt">asdfasdf</text>  
+</view>  

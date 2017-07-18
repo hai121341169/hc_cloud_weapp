@@ -1,0 +1,8 @@
+<template name="head">
+  <view class="page-head">
+    <view class="head-desc">
+    	<text class="title">{{title}}</text>
+    	<image class="title-logo" src="{{title_logo}}"></image>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,110 @@
+/**history.wxss**/
+.page-head{
+  	width: 660rpx;
+	position: fixed;
+	background-color: #FFF;
+	z-index: 1;
+}
+.tab_area{
+	display:-webkit-box;
+	display:-webkit-flex;
+	display:flex;
+    height:80rpx;
+	position:fixed;
+	width:660rpx;
+	padding-top:230rpx;
+	background-color: #FFF;
+}
+
+.tab_btn{
+	display:flex;
+	-webkit-box-flex:1;
+	-webkit-flex:1;
+	flex:1;
+	width: 50%;
+	border: 1px solid #CCC;
+	height: 100%;
+    align-items: center;
+    justify-content:center;
+	font-size: 32rpx;
+	background-color: #f2f2f2;
+}
+
+#tab_btn_0.on{
+	border-right: 0;
+	border-bottom: 0;
+	background-color: #FFF;
+}
+
+#tab_btn_1.on{
+	border-left: 0;
+	border-bottom: 0;
+	background-color: #FFF;
+}
+
+.item{
+	padding: 30rpx 0;
+}
+.list_area{
+	padding-top: 310rpx;
+	display:flex;
+	flex-direction:column;
+	box-sizing:border-box;
+}
+
+.item_area{
+	padding: 25rpx 0;
+	border-bottom: 1px solid #cccccc;
+}
+.item_line{
+	float: left;
+	width: 75%;
+}
+.item_btn{
+	float: right;
+	width: 25%;
+	text-align:center;
+}
+.item_line text{
+	line-height: 40rpx;
+	display: block;
+	margin: 10rpx 0;
+	font-size:28rpx;
+}
+.tip_content{
+	text-align: center;
+	padding: 10rpx 0;
+	color: #CCC;
+}
+.text_btn{
+	display: block;
+	width: 150rpx;
+	height: 40rpx;
+	line-height: 40rpx;
+  	border-radius: 5rpx;
+  	border: 1px solid #CCC;
+  	text-align: center;
+}
+.text_btn:hover{
+	background-color: #EEE;
+}
+.red{
+	background-color: #ff4d4d;
+	color: #FFF;
+}
+.grap{
+	background-color: #b8b8b8;
+	color: #FFF;
+}
+.item_line text.hidden{
+	visibility: hidden;
+}
+
+
+.avatar_url{
+	width: 40rpx;
+	height: 40rpx;
+	vertical-align:middle;
+	margin-right: 20rpx;
+  	border-radius: 50%;
+}

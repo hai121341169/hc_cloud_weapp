@@ -1,0 +1,44 @@
+/**index.wxss**/
+.page-section{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  border: 1px solid #cccccc;
+  border-radius: 10rpx;
+  padding:10rpx 20rpx;
+  margin-top: 25rpx;
+}
+.control_title{
+	width:80px;
+	word-wrap:break-word;
+	word-break:break-all;
+}
+
+.control_cell{
+	-webkit-box-flex:1;
+	-webkit-flex:1;
+	flex:1;
+}
+.control_btn{
+  margin-top: 25rpx;
+}
+.control_input{
+	height: 50rpx;
+}
+.page_desc{
+	border: 1px dashed #cccccc;
+	background-color: #f2f2f2;
+	color: #999;
+	font-size: 28rpx;
+	white-space:nowrap;
+	padding:20rpx;
+	line-height:50rpx;
+}
+.history_btn{
+	color: #999;
+  	border: 1px solid #cccccc;
+  	background-color: #FFF;
+}
