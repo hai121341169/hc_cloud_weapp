@@ -4,7 +4,10 @@ var app = getApp()
 Page({
   data: {
     select_index: -1,
-    select_order_work_image_id: -1
+    select_order_work_image_id: -1,
+    hiddenModal: true,
+    nocancel: true,
+    promptText: ''
   },
   selectImage: function(e){
     var index = e.currentTarget.dataset.index
@@ -17,44 +20,104 @@ Page({
   insertImage: function(e){
     var select_index = this.data.select_index
     var index = e.currentTarget.dataset.index
-    console.log(index)
-    console.log(select_index)
-    console.log(this.data.list_1)
-    console.log(this.data.list_0)
+    var order_work_image_id = 0
+    var order_work_image_status = -1
 
     // 判断是插入还是放到临时区
     if(select_index >= 0){
       if(index >= 0){
         this.data.list_1.splice(index, 0, this.data.list_0[select_index]);
         this.data.list_0.splice(select_index, 1);
-        this.setData({
-            list_0: this.data.list_0,
-            list_1: this.data.list_1,
-            select_index: -1,
-            select_order_work_image_id: -1
-        })
       }else{
         this.data.list_1.push(this.data.list_0[select_index]);
         this.data.list_0.splice(select_index, 1);
+      }
+      order_work_image_id = this.data.select_order_work_image_id
+      order_work_image_status = 1
+      this.setData({
+          list_0: this.data.list_0,
+          list_1: this.data.list_1,
+          select_index: -1,
+          select_order_work_image_id: -1
+      })
+    }else{
+      if(index >= 0){
+        this.data.list_0.push(this.data.list_1[index]);
+        this.data.list_1.splice(index, 1);
         this.setData({
             list_0: this.data.list_0,
             list_1: this.data.list_1
         })
+        order_work_image_id = e.currentTarget.dataset.order_work_image_id
+        order_work_image_status = 0
       }
-    }else{
-      this.data.list_0.push(this.data.list_1[index]);
-      this.data.list_1.splice(index, 1);
-      this.setData({
-          list_0: this.data.list_0,
-          list_1: this.data.list_1
-      })
     }
+
+    if(order_work_image_id > 0 && order_work_image_status >= 0){
+      var _this = this
+      wx.request({  
+        url: app.globalData.hucaiApi+'other/order/update_order_work_image',  
+        data: { order_work_image_id: order_work_image_id, status: order_work_image_status },
+        success: function (res) {
+          if(res.statusCode == 200){
+            if(res.data.code != 200){
+              _this.setData({
+                hiddenModal: false,
+                promptText: res.data.description
+              })
+            }
+          }else{
+            _this.setData({
+              hiddenModal: false,
+              promptText: '删除失败'
+            })
+          }
+        }
+      });  
+    }
+  },
+  removeImage: function(e){
+    var _this = this
+    var index = e.currentTarget.dataset.index
+    var order_work_image_id = e.currentTarget.dataset.order_work_image_id
+
+    _this.data.list_0.splice(index, 1);
+    _this.setData({
+      list_0: _this.data.list_0
+    })
+    
+    wx.request({  
+      url: app.globalData.hucaiApi+'other/order/remove_order_work_image',  
+      data: { order_work_image_id: order_work_image_id },
+      success: function (res) {
+        if(res.statusCode == 200){
+          if(res.data.code == 200){
+          }else{
+            _this.setData({
+              hiddenModal: false,
+              promptText: res.data.description
+            })
+          }
+        }else{
+          _this.setData({
+            hiddenModal: false,
+            promptText: '删除失败'
+          })
+        }
+      }
+    });      
   },
   saveImage: function(){
 
   },
   submitImage: function(){
 
+  },
+  bindconfirm: function(){
+    this.setData({
+      hiddenModal: true,
+      promptText: ''
+    })
   },
   onLoad: function (options) {
     var data = {};
@@ -82,7 +145,7 @@ function getList(that, data){
     icon: 'loading',
     duration: 60000
   });
-  console.log(app.globalData.hucaiApi+'other/order/order_work_image')
+
   wx.request({  
     url: app.globalData.hucaiApi+'other/order/order_work_image',  
     data: data,

@@ -9,7 +9,7 @@
       <view class="page-section">
         <view class="control_title">订单编号：</view>
         <view class="control_cell">
-          <input type="text" class="control_input" name="order_id" value="{{order_id}}" placeholder="" />
+          <input type="text" class="control_input" name="order_sn" value="{{order_sn}}" placeholder="" />
         </view>
       </view>
       <view class="page-section">
@@ -21,21 +21,18 @@
         </view>    
       </view>
     	<view class="control_btn">
-      <navigator url="/pages/list/list">
     	 <button type="button" class="" formType="submit">下一步</button>
-       </navigator>
       </view>
       <view class="page-section page_desc">
         <text>填写说明：\n① 复制微信商城订单号，系统将自动填入输入框；\n② 根据订单微信商城商品顺序选择相应作品序号。</text>
       </view>
       <view class="control_btn">
         <navigator url="/pages/history/history">
-          <button type="button" class="history_btn" formType="submit">历史照片查询</button>
+          <button type="button" class="history_btn">历史照片查询</button>
         </navigator>
       </view>
     </form>
-    <!-- <modal hidden="{{hiddenModal}}" no-cancel="{{nocancel}}" bindconfirm="bindconfirm" bindcancel="bindcancel">{{promptText}}</modal>
-    <loading hidden="{{hiddenLoading}}">{{LoadingText}}</loading>-->
+    <modal hidden="{{hiddenModal}}" no-cancel="{{nocancel}}" bindconfirm="bindconfirm" bindcancel="bindcancel">{{promptText}}</modal>
   </view>
   <template is="foot" />
 </view>

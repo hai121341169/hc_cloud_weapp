@@ -10,25 +10,19 @@
     	<view class="tab_btn {{current_tab == 1 ? 'on' : ''}}" data-index="1" id="tab_btn_1" bindtap="tabChange">我参入的</view>  
   	</view>
   	<view class="list_area">
-		<template name="list_item"> 
-		<view class="item_area">
-			<navigator url="/pages/image/image?order_work_id={{item.id}}">
+		<view wx:for="{{list}}" wx:key="order_key" wx:for-item="item">  
+			<view class="item_area">
 				<view class="item_line">
 					<text>单号：{{item.order_sn}}</text>
 					<text>序号：{{item.work_id}}</text>
-				</view>   
-			</navigator>
-			<view class="item_line item_btn">
-				<text wx:if="{{item.is_image == false}}" class="text_btn {{item.btn0_bg}}" bindtap="{{item.btn0_bindtap}}">{{item.btn0_text}}</text>
-				<image wx:if="{{item.is_image}}" class="avatar_url" src="{{item.avatar_url}}"></image>
-				<text class="text_btn {{item.btn1_bg}}" bindtap="{{item.btn1_bindtap}}">{{item.btn1_text}}</text>
+				</view>
+				<view class="item_line item_btn">
+					<text wx:if="{{item.is_image == false}}" data-index="{{index}}" data-order_work_id="{{item.id}}" class="text_btn {{item.btn0_bg}}" bindtap="{{item.btn0_bindtap}}">{{item.btn0_text}}</text>
+					<image wx:if="{{item.is_image}}" class="avatar_url" src="{{item.avatar_url}}"></image>
+					<text class="text_btn {{item.btn1_bg}}" data-index="{{index}}" data-order_work_id="{{item.id}}" bindtap="{{item.btn1_bindtap}}">{{item.btn1_text}}</text>
+				</view>
+				<view class="clear"></view>
 			</view>
-			<view class="clear"></view>
-		</view>  
-		</template>
-
-		<view wx:for="{{list}}" wx:key="order_key" wx:for-item="item">  
-		    <template is="list_item" data="{{item}}"/>  
 		</view>
 		<view wx:if="{{hidden_tip}}" class="tip_content">{{tip_content}}</view> 
   	</view>

@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/history/history",
     "pages/image/image",
-    "pages/test/test",
+    "pages/join/join",
     "pages/list/list"
   ],
   "window":{

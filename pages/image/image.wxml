@@ -45,7 +45,7 @@
 
   	<view class="tmp_area">
   		<view class="tmp_area_btn">
-  			<navigator wx:if="{{edit_hidden}}" url="/pages/list/list?order_work_id={{order_work_id}}">
+  			<navigator wx:if="{{edit_hidden}}" url="{{edit_url}}?order_work_id={{order_work_id}}">
       			<button wx:if="{{edit_hidden}}" type="button" class="">下一步：编辑照片</button>
       		</navigator>
 	  	</view>

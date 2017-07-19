@@ -7,7 +7,8 @@ Page({
     current_tab: 0,
     tab_0: [],
     tab_1: [],
-    edit_hidden: false
+    edit_hidden: false,
+    edit_url: ''
   },
   tabChange: function(e){
     var index = e.currentTarget.dataset.index
@@ -23,19 +24,15 @@ Page({
       sizeType: ['original'],
       sourceType: ['album', 'camera'],
       success: (res) => {
-        // _this.setData({
-        //   hiddenLoadingModal: false
-        // })
         wx.showToast({
           title: '开始准备上传！',
+          mask: true,
           icon: 'loading',
           duration: 60000
         })
         var fileLen = res.tempFilePaths.length;
         if(fileLen > 0){
-          var i = 0,
-          filepath = app.globalData.orderInfo.order_id + '/' + app.globalData.orderInfo.work_id
-          uploadPhoto(_this, res.tempFilePaths, filepath, i)
+          uploadPhoto(_this, res.tempFilePaths, 0)
         }
       },        
     });
@@ -49,7 +46,8 @@ Page({
     this.setData({
       order_work_id: order_work_id
     })
-
+  },
+  onShow: function(){
     getList(this)
   }
 })
@@ -69,6 +67,12 @@ function getList(that){
       var l_0 = [], l_1 = [] 
 
       var edit_hidden = res.data.data.status > 0 ? false : true
+
+      // 判断是否为发起者
+      var edit_url = res.data.data.user_id == userinfo.id ? '/pages/list/list' : '/pages/join/join'
+      that.setData({
+        edit_url: edit_url
+      })
       for (var i = 0; i < res.data.data.list.length; i++) {
         var tmp_data = res.data.data.list[i]
         if(userinfo.id == tmp_data.user_id){
@@ -114,72 +118,59 @@ function getList(that){
 }
 
 
-function uploadPhoto(_this, tempFilePaths, filepath, i){
+function uploadPhoto(_this, tempFilePaths, i){
   wx.showToast({
     title: i+'/'+ tempFilePaths.length +'张上传成功',
+    mask: true,
     icon: 'loading',
     duration: 60000
   });
-  // _this.setData({
-  //   promptLoadingText: i+'/'+ tempFilePaths.length +'张上传成功'
-  // })
+
   wx.uploadFile({
-    url: app.globalData.cosApi+'weapp/upload', //仅为示例，非真实的接口地址
+    url: app.globalData.hucaiApi+'other/image/add_image',
     filePath: tempFilePaths[i],
     name: 'file',
     formData:{
-      'filename': _this.data.finish_num + '.' + tempFilePaths[i].split('.').pop(),
-      'filepath': filepath
+      order_work_id: order_work_id,
+      user_id: userinfo.id
     },
     success: function(res){
-      _this.data.finish_num++
-      _this.data.success_up++
-
-      if(res.statusCode == 200){
-        _this.data.success_num++
-        _this.data.images.push(tempFilePaths[i])
+      i++
+      if(res.statusCode == 200){ // 上传成功的操作
+        var data = JSON.parse(res.data)
+        _this.data.tab_0.push(data.data)
         _this.setData({
-          images: _this.data.images
+          tab_0: _this.data.tab_0
         }) 
-
-        _this.data.success_images.push(JSON.parse(res.data).data)
-        // console.log(_this.data.success_images)
       }
 
-      i++
-
       if(tempFilePaths.length == i){
-        // _this.setData({
-        //   hiddenLoading: true
-        // })
         wx.showToast({
           title: i+'/'+ tempFilePaths.length +'张上传成功',
+          mask: true,
           icon: 'loading',
           duration: 60000
         });
-        // _this.setData({
-        //   promptLoadingText: i+'/'+ tempFilePaths.length +'张上传成功'
-        // })
-        _this.data.success_up = 0
         setTimeout(function() {
-          // _this.setData({
-          //   hiddenLoadingModal: true
-          // })
           wx.hideToast()
         }, 1000);
       }else{
-        uploadPhoto(_this, tempFilePaths, filepath, i)
+        uploadPhoto(_this, tempFilePaths, i)
       }
     },
     fail: function(res){
       // console.log(res)
       if(res.errMsg == "uploadFile:fail timeout"){
-        wx.hideToast()
-        _this.setData({
-          hiddenLoading: true,
-          hiddenModal: false,
-          promptText: '上传超时，请重新再试'
-        })
+        wx.showToast({
+          title: '上传超时',
+          mask: true,
+          icon: 'loading',
+          duration: 60000
+        });
+        setTimeout(function() {
+          wx.hideToast()
+        }, 1000);
       }
     }
   })
+}

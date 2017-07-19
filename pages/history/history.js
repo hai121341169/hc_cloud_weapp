@@ -26,11 +26,46 @@ Page({
 
     getList(this);
   },
-  deleteOrderWork: function(){
-    console.log('delete')
+  deleteOrderWork: function(e){
+    var _this = this
+    var index = e.currentTarget.dataset.index
+    var order_work_id = e.currentTarget.dataset.order_work_id
+    if(order_work_id > 0 && index >= 0){
+      wx.request({  
+        url: app.globalData.hucaiApi+'other/order/remove_order_work',  
+        data: { order_work_id: order_work_id },
+        success: function (res) {
+          console.log(res)
+          if(res.statusCode == 200){
+            if(res.data.code == 200){
+              var l = _this.data.tab_0.list
+              l.splice(index, 1);
+              _this.setData({  
+                list: l
+              })
+            }else{
+              _this.setData({
+                hiddenModal: false,
+                promptText: res.data.description
+              })
+            }
+          }else{
+            _this.setData({
+              hiddenModal: false,
+              promptText: '删除失败'
+            })
+          }
+        }
+      }); 
+    }
   },
-  editOrderWork: function(){
-    console.log('edit')
+  editOrderWork: function(e){
+    var order_work_id = e.currentTarget.dataset.order_work_id
+    if(order_work_id > 0){
+      wx.navigateTo({
+        url: '/pages/image/image?order_work_id='+order_work_id
+      })
+    }
   },
   onLoad: function () {
     userinfo = wx.getStorageSync('userinfo');
@@ -93,15 +128,15 @@ function getList(that){
           tmp_data['btn1_text'] = tmp_data['is_self'] ? '继续处理' : '继续参入'
           tmp_data['btn1_bg'] = 'red'
         }else if(tmp_data['status'] == 1){
-          tmp_data['btn1_bindtap'] = 'editOrderWork'
+          tmp_data['btn1_bindtap'] = ''
           tmp_data['btn1_text'] = '等待接单'
           tmp_data['btn1_bg'] = 'grap'
         }else if(tmp_data['status'] == 2){
-          tmp_data['btn1_bindtap'] = 'editOrderWork'
+          tmp_data['btn1_bindtap'] = ''
           tmp_data['btn1_text'] = '已接单'
           tmp_data['btn1_bg'] = 'grap'
         }else if(tmp_data['status'] == 3){
-          tmp_data['btn1_bindtap'] = 'editOrderWork'
+          tmp_data['btn1_bindtap'] = ''
           tmp_data['btn1_text'] = '处理结束'
           tmp_data['btn1_bg'] = 'grap'
         }

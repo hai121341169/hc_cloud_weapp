@@ -1,0 +1,30 @@
+<import src="../common/head.wxml" />
+<import src="../common/foot.wxml" />
+
+<!--index.wxml-->
+<view class="container">
+  <template is="head" data="{{title:'2. 上传照片',title_logo:'/resources/project.png'}}"/>
+  <view class="page-body">
+  	<view class="desc">
+  		<text>我的照片</text>
+  	</view>
+  	<view class="list_area">  
+  		<view class="item_image">
+  			<block wx:for="{{list}}" wx:key="imageKey" wx:for-item="image">
+  			<view class="image_area">
+  				<image src="{{image.image_url}}" mode="scaleToFill"></image>
+          <icon wx:if="{{image.status == 0}}" type="clear" data-index="{{index}}" data-order_work_image_id="{{image.order_work_image_id}}" size="25" bindtap="removeImage" />
+          <text wx:else class="use_icon">被征用</text>
+  			</view>
+  			</block>
+  		</view>
+  		<view class="clear"></view> 
+  	</view>
+  	<view class="tmp_area">
+  		<view class="tmp_area_btn">
+      		<button type="button" class="submit_btn" bindtap="submitImage">完成</button>
+	  	</view>
+    </view>
+  	</view>
+    <modal hidden="{{hiddenModal}}" no-cancel="{{nocancel}}" bindconfirm="bindconfirm" bindcancel="bindcancel">{{promptText}}</modal>
+</view>
