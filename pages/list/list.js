@@ -1,13 +1,11 @@
 //index.js
 //获取应用实例
 var app = getApp()
+var order_work_id
 Page({
   data: {
     select_index: -1,
     select_order_work_image_id: -1,
-    hiddenModal: true,
-    nocancel: true,
-    promptText: ''
   },
   selectImage: function(e){
     var index = e.currentTarget.dataset.index
@@ -29,6 +27,7 @@ Page({
         this.data.list_1.splice(index, 0, this.data.list_0[select_index]);
         this.data.list_0.splice(select_index, 1);
       }else{
+        if(!this.data.list_1) this.data.list_1 = []
         this.data.list_1.push(this.data.list_0[select_index]);
         this.data.list_0.splice(select_index, 1);
       }
@@ -42,6 +41,7 @@ Page({
       })
     }else{
       if(index >= 0){
+        if(!this.data.list_0) this.data.list_0 = []
         this.data.list_0.push(this.data.list_1[index]);
         this.data.list_1.splice(index, 1);
         this.setData({
@@ -107,15 +107,106 @@ Page({
       }
     });      
   },
-  saveImage: function(){
+  saveImage: function(save){
+    var sort = [],
+        save = typeof(arguments[0]) == 'number' ? arguments[0] : 0,
+        list = this.data.list_1 || [],
+        list_0 = this.data.list_0 || []
+    list = list.concat(list_0)
+    wx.showToast({
+      title: '加载中...',
+      mask: true,
+      icon: 'loading',
+      duration: 60000
+    });
+    if(list){
+      for(var i in list){
+        sort.push(list[i].id)
+      }
+      console.log({ order_work_id: order_work_id, sort: sort })
+      // 排序写入数据库
+      wx.request({
+        method: 'POST',
+        url: app.globalData.hucaiApi+'other/order/save_order_work_image',  
+        data: { order_work_id: order_work_id, sort: sort, save: save },
+        header: {
+            'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          wx.hideToast()
+          if(res.statusCode == 200){
+            if(res.data.code == 200){
+              var content = '保存成功，您下次可以在"历史照片查询"中继续处理。'
+              if(save == 1) content = '照片提交成功！您可在"历史照片查询"页面中查询进度。'
 
+              wx.showModal({
+                content: content,
+                showCancel: false,
+                success: function(res) {
+                  if (res.confirm) {
+                    wx.navigateBack({
+                        delta: 1
+                    })
+                  }
+                }
+              })
+            }else{
+              wx.showModal({
+                content: res.data.description,
+                showCancel: false,
+                success: function(res) {
+                  if (res.confirm) {
+                    console.log('用户点击确定')
+                  }
+                }
+              })
+            }
+          }else{
+            wx.showModal({
+              content: '保存失败',
+              showCancel: false,
+              success: function(res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                }
+              }
+            })
+          }
+        }
+      });
+    }
   },
   submitImage: function(){
-
-  },
-  bindconfirm: function(){
+    var _this = this
+    if(this.data.list_0){
+      console.log(this.data.list_0.length)
+      if(this.data.list_0.length > 0){
+        wx.showModal({
+          showCancel: false,
+          content: '临时区还有未处理的照片，请处理完后再提交。',
+          success: function(res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+        return
+      }
+    }
+    wx.showModal({
+      content: '正式提交后将不可再对照片进行编辑，确认提交？',
+      success: function(res) {
+        if (res.confirm) {
+          _this.saveImage(1)
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
     this.setData({
-      hiddenModal: true,
+      hiddenModal: false,
       promptText: ''
     })
   },
@@ -131,6 +222,7 @@ Page({
       }
     }else{
       data.order_work_id = options.order_work_id
+      order_work_id = data.order_work_id
     }
 
     getList(this, data)

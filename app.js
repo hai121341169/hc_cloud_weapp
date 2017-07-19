@@ -15,8 +15,8 @@ App({
     });
     var userinfo = wx.getStorageSync('userinfo');
     if(userinfo){
-      console.log('读取storage数据');
-      console.log(userinfo);
+      // console.log('读取storage数据');
+      // console.log(userinfo);
       wx.hideToast();
     }else{
       wx.login({

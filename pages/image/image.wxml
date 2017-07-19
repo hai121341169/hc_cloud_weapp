@@ -5,6 +5,12 @@
 <view class="container">
   <template is="head" data="{{title:'照片列表',title_logo:'/resources/camera.png'}}"/>
   <view class="page-body">
+    <view class="page-section">
+      <view class="weui-cells__title">
+        <text class="title_item">订单号：{{order_id}}</text>
+        <text class="title_item">作品序号：{{work_id}}</text>
+      </view>
+    </view>
   	<view class="tab_area">
   		<view class="tab_btn {{current_tab == 0 ? 'on' : ''}}" data-index="0" id="tab_btn_0" bindtap="tabChange">我的照片</view>  
     	<view class="tab_btn {{current_tab == 1 ? 'on' : ''}}" data-index="1" id="tab_btn_1" bindtap="tabChange">好友照片</view>  

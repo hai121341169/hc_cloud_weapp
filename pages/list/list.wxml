@@ -38,10 +38,9 @@
 	  	</scroll-view>
   		<view class="tmp_area_btn">
       		<button type="button" class="save_btn " bindtap="saveImage">保存</button>
-      		<button type="button" class="submit_btn" bindtap="submitImage">完成</button>
+      		<button type="button" class="submit_btn" data-save="1" bindtap="submitImage">完成</button>
       		<view class="clear"></view>
 	  	</view>
     </view>
   	</view>
-    <modal hidden="{{hiddenModal}}" no-cancel="{{nocancel}}" bindconfirm="bindconfirm" bindcancel="bindcancel">{{promptText}}</modal>
 </view>
