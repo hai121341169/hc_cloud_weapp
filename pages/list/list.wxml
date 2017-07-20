@@ -14,6 +14,7 @@
   			<view class="image_area">
   				<image src="{{image.image_url}}" mode="scaleToFill"></image>
       		<image src="/resources/arrow_left.png" data-index="{{index}}" data-order_work_image_id="{{image.order_work_image_id}}" class="arrow" bindtap="insertImage"></image>
+          <icon wx:if="{{image.quality>0}}" type="warn" class="quality_warn" size="20" data-quality="{{image.quality}}" bindtap="qualityListen"></icon>
   			</view>
   			</block>
   			<view class="image_area virtual_area">
@@ -30,9 +31,10 @@
   			<block wx:for="{{list_0}}" wx:key="imageKey" wx:for-item="image">
 			<view class="tmp_image_area">
 				<image src="{{image.image_url}}" mode="scaleToFill"></image>
-          		<icon type="clear" data-index="{{index}}" data-order_work_image_id="{{image.order_work_image_id}}" size="25" bindtap="removeImage" />
+          		<icon type="clear" data-index="{{index}}" class="icon_remove" data-order_work_image_id="{{image.order_work_image_id}}" size="25" bindtap="removeImage" />
           		<image wx:if="{{select_index != index}}" src="/resources/arrow_up.png" data-index="{{index}}" data-order_work_image_id="{{image.order_work_image_id}}" class="arrow" bindtap="selectImage"></image>
           		<text wx:else class="select_icon">已经选中</text>
+              <icon wx:if="{{image.quality>0}}" type="warn" class="quality_warn" size="20" data-quality="{{image.quality}}" bindtap="qualityListen"></icon>
 			</view>
 			</block>
 	  	</scroll-view>

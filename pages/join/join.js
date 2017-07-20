@@ -1,7 +1,7 @@
 //join.js
 //获取应用实例
-var app = getApp()
-var userinfo
+var app = getApp(),
+userinfo
 Page({
   data: {
     select_index: -1,
@@ -43,7 +43,21 @@ Page({
   },
   submitImage: function(){
     wx.navigateBack({
-        delta: 1
+        delta: 2
+    })
+  },
+  qualityListen: function(e){
+    var quality = e.currentTarget.dataset.quality
+    var quality_warn = ['', '照片不符合要求，建议上传4:3比例的照片', '照片像素过低，可能导致照片模糊！建议更换为短边尺寸大于900像素的照片']
+    console.log(quality)
+    wx.showModal({
+      showCancel: false,
+      content: quality_warn[quality],
+      success: function(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        }
+      }
     })
   },
   bindconfirm: function(){
@@ -54,8 +68,21 @@ Page({
   },
   onLoad: function (options) {
     var data = {};
-    userinfo = wx.getStorageSync('userinfo');
-    userinfo = JSON.parse(userinfo)
+    userinfo = app.globalData.userinfo
+    if(JSON.stringify(userinfo) == "{}"){
+      wx.showModal({
+        content: '暂时还未登陆',
+        showCancel: false,
+        success: function(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '/pages/index/index'
+            })
+          }
+        }
+      })
+    }
+
     if(!options.order_work_id){
       if(!options.order_id || !options.work_id){
         console.log('缺少参数')

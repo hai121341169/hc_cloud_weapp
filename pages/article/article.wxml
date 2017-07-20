@@ -1,0 +1,13 @@
+<import src="../common/head.wxml" />
+<import src="../common/foot.wxml" />
+
+<!--index.wxml-->
+<view class="container">
+  <view class="page-head" style="margin-top: 30rpx">
+    <text class="title">{{title}}</text>
+  </view>
+  <view class="page-body" style="margin-top: 30rpx">
+    <text class="content">{{content}}</text>
+  </view>
+  <template is="foot" />
+</view>

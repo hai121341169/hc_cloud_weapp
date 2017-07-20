@@ -1,21 +1,20 @@
-function formatTime(date) {
-  var year = date.getFullYear()
-  var month = date.getMonth() + 1
-  var day = date.getDate()
-
-  var hour = date.getHours()
-  var minute = date.getMinutes()
-  var second = date.getSeconds()
-
-
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
-}
-
-function formatNumber(n) {
-  n = n.toString()
-  return n[1] ? n : '0' + n
+function getGlobalUserInfo(userinfo){
+  if(JSON.stringify(userinfo) == "{}"){
+    wx.showModal({
+      content: '暂时还未登陆',
+      showCancel: false,
+      success: function(res) {
+        if (res.confirm) {
+          wx.navigateTo({
+            url: '/pages/index/index'
+          })
+        }
+      }
+    })
+    return userinfo
+  }
 }
 
 module.exports = {
-  formatTime: formatTime
+  getGlobalUserInfo: getGlobalUserInfo
 }

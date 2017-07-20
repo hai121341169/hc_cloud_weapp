@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var userinfo
+var userinfo = app.globalData.userinfo
 Page({
   data: {
     index: 0,
@@ -23,7 +23,6 @@ Page({
         hiddenModal: false,
         promptText: '订单号不正确'
       })
-      console.info('');
     }else if(!/^E\d{23}$/.test(e.detail.value.order_sn) && e.detail.value.order_sn != '88888888'){
       _this.setData({
         hiddenModal: false,
@@ -43,6 +42,21 @@ Page({
         duration: 60000
       });
       // 验证订单是否
+      var userinfo = app.globalData.userinfo
+      if(JSON.stringify(userinfo) == "{}"){
+        wx.hideToast();
+        
+        wx.showModal({
+          content: '暂时还未登陆',
+          showCancel: false,
+          success: function(res) {
+            if (res.confirm) {
+              
+            }
+          }
+        })
+        return
+      }
       wx.request({
         method: 'POST',
         url: app.globalData.hucaiApi+'other/order', //仅为示例，并非真实的接口地址
@@ -97,23 +111,7 @@ Page({
       nocancel: true
     })
   },
-  onShareAppMessage: function (res) {
-    return {
-      title: '照片上传助手',
-      path: '/pages/index/index',
-      success: function(res) {
-        // 转发成功
-      },
-      fail: function(res) {
-        // 转发失败
-      }
-    }
-  },
   onLoad: function () {
-    // 初始化数据
-    userinfo = wx.getStorageSync('userinfo');
-    userinfo = JSON.parse(userinfo)
-
     var _this = this
     _this.setData({
       array: app.globalData.workText

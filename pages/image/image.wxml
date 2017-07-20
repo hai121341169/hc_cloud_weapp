@@ -7,9 +7,17 @@
   <view class="page-body">
     <view class="page-section">
       <view class="weui-cells__title">
-        <text class="title_item">订单号：{{order_id}}</text>
+        <text class="title_item">订单号：{{order_sn}}</text>
         <text class="title_item">作品序号：{{work_id}}</text>
       </view>
+	    <view class="notice_item title_number">
+	    	<text class="title_item left">已上传{{has_number}}/{{max_number}}张照片</text>
+	    	<navigator url="/pages/article/article?article_id={{article_id}}">
+	    	<text class="title_item right">操作说明</text>
+	    	<icon type="warn" size="20" color="gray" class="right"></icon>
+	    	</navigator>
+	    	<view class="clear"></view>
+	    </view>
     </view>
   	<view class="tab_area">
   		<view class="tab_btn {{current_tab == 0 ? 'on' : ''}}" data-index="0" id="tab_btn_0" bindtap="tabChange">我的照片</view>  
@@ -21,9 +29,10 @@
 				<block wx:for="{{tab_0}}" wx:key="imageKey" wx:for-item="image">
 				<view class="image_area">
 					<image src="{{image.image_url}}" mode="scaleToFill"></image>
+					<icon wx:if="{{image.quality>0}}" type="warn" class="quality_warn" size="20" data-quality="{{image.quality}}" bindtap="qualityListen"></icon>
 				</view>
 				</block>
-				<view wx:if="{{edit_hidden}}" class="image_area">
+				<view wx:if="{{add_hidden}}" class="image_area">
 					<image class="camera_logo" src="../../resources/add.png" bindtap="addImage"></image>
 				</view>
 			</view>
@@ -41,6 +50,7 @@
 					<block wx:for="{{item.data}}" wx:key="imageKey" wx:for-item="image">
 					<view class="image_area">
 						<image src="{{image.image_url}}" mode="scaleToFill"></image>
+						<icon wx:if="{{image.quality>0}}" type="warn" class="quality_warn" size="20" data-quality="{{image.quality}}" bindtap="qualityListen"></icon>
 					</view>
 					</block>
 				</view>

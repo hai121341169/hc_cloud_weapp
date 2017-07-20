@@ -68,8 +68,20 @@ Page({
     }
   },
   onLoad: function () {
-    userinfo = wx.getStorageSync('userinfo');
-    userinfo = JSON.parse(userinfo)
+    userinfo = app.globalData.userinfo
+    if(JSON.stringify(userinfo) == "{}"){
+      wx.showModal({
+        content: '暂时还未登陆',
+        showCancel: false,
+        success: function(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '/pages/index/index'
+            })
+          }
+        }
+      })
+    }
 
     getList(this)
   }, 
@@ -137,7 +149,7 @@ function getList(that){
           tmp_data['btn1_bg'] = 'grap'
         }else if(tmp_data['status'] == 3){
           tmp_data['btn1_bindtap'] = ''
-          tmp_data['btn1_text'] = '处理结束'
+          tmp_data['btn1_text'] = '已处理'
           tmp_data['btn1_bg'] = 'grap'
         }
         l.push(tmp_data)  

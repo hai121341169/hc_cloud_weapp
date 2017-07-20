@@ -4,7 +4,8 @@
     "pages/history/history",
     "pages/image/image",
     "pages/join/join",
-    "pages/list/list"
+    "pages/list/list",
+    "pages/article/article"
   ],
   "window":{
     "backgroundTextStyle":"light",

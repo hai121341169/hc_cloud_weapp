@@ -2,8 +2,9 @@
 App({
   globalData:{
     workText: ['作品1', '作品2', '作品3', '作品4', '作品5', '作品6', '作品7', '作品8', '作品9', '作品10', '作品11', '作品12'],
-    hucaiApi: 'http://basic.wh.com/',
+    hucaiApi: 'https://29858960.qcloud.la/',
     cosApi: 'https://29858960.qcloud.la/',
+    userinfo: {}
   },
   onLaunch: function() {
     var _this = this
@@ -13,10 +14,9 @@ App({
       icon: 'loading',
       duration: 60000
     });
-    var userinfo = wx.getStorageSync('userinfo');
-    if(userinfo){
-      // console.log('读取storage数据');
-      // console.log(userinfo);
+    var userinfo = _this.globalData.userinfo
+
+    if(JSON.stringify(userinfo) != "{}"){
       wx.hideToast();
     }else{
       wx.login({
@@ -32,6 +32,7 @@ App({
                 var signature = data.signature;
                 var encryptedData = data.encryptedData; 
                 var iv = data.iv;
+                console.log(data)
                 wx.request({
                   url: _this.globalData.hucaiApi+'weapp/login',
                   data: {
@@ -43,14 +44,13 @@ App({
                   },
                   method: 'GET', 
                   success: function(info){
-                    // console.log(info)
+                    console.log(info)
                     if(info.statusCode == 200){
                       var data = info.data
                       if(data.code == 200){
                         console.log('查询所得数据');
-                        userinfo = JSON.stringify(data.data)
-                        wx.setStorageSync('userinfo', userinfo)
-                        console.log(userinfo);
+                        _this.globalData.userinfo = data.data
+                        // console.log(userinfo);
                         wx.hideToast();
                       }else{
                         wx.showToast({
